@@ -1,0 +1,36 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>雨后校园 · 像素 MV</title>
+<style>
+body{margin:24px auto;padding:0 16px;max-width:1100px;background:#172332;color:#e6e9eb;font:16px system-ui}
+h1{font-size:24px}canvas{display:block;width:100%;height:auto;image-rendering:pixelated;background:#252b34}
+.controls{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin:16px 0}button,select{padding:8px 12px;font:inherit}
+input[type=range]{width:100%;margin:8px 0}a{color:#a6d7f5}#time{font-variant-numeric:tabular-nums}p{line-height:1.6}
+</style>
+<h1>雨后校园 · 像素 MV</h1>
+<canvas width="1920" height="1080" aria-label="像素校园动画画面"></canvas>
+<audio preload="auto"></audio>
+<div class="controls"><button id="play" disabled>播放</button><button id="restart">从头播放</button>
+<label><input id="captions" type="checkbox" checked>示例字幕</label>
+<label>声音 <select id="sound"><option value="1">合播</option><option value="0">静音</option></select></label>
+<span id="time">载入中…</span></div>
+<input id="seek" type="range" min="0" step="0.020833333333" value="0" aria-label="播放时间">
+<p id="status">正在载入人物与七套场景。</p>
+<p><a href="demo.mp4">查看随包编码视频</a> · <a href="STORYBOARD.md">本例分镜</a> · <a href="SKILL.md">制作技能</a></p>
+<p>原生像素、白蓝校服、彩色校园；公开版配原创示例音乐与文字。字幕开关只控制本帧字幕，不切换画面来源。</p>
+<script type="module">
+import {project,shots} from './project.js';
+await import('./mv.js');
+const audio=document.querySelector('audio'),play=document.querySelector('#play'),seek=document.querySelector('#seek'),cap=document.querySelector('#captions');
+audio.src=project.audio;seek.max=project.duration;
+function paint(){const t=Math.min(audio.currentTime,project.duration);window.render(t,cap.checked);seek.value=t;
+ const sh=shots.find(s=>t>=s[1]&&t<s[2])||shots.at(-1);document.querySelector('#time').textContent=t.toFixed(2)+' / '+project.duration.toFixed(2)+'s · '+sh[0]+' '+sh[4];}
+async function start(){try{await audio.play();play.textContent='暂停'}catch(e){document.querySelector('#status').textContent='音频无法播放：'+e.message}}
+play.onclick=()=>{if(audio.paused)start();else{audio.pause();play.textContent='播放'}};
+document.querySelector('#restart').onclick=()=>{audio.currentTime=0;start()};
+seek.oninput=()=>{audio.currentTime=Number(seek.value);paint()};cap.onchange=paint;
+document.querySelector('#sound').onchange=e=>{audio.muted=e.target.value==='0'};
+audio.oncanplay=()=>{play.disabled=false;document.querySelector('#status').textContent='已就绪 · 48fps 时间采样，步态按像素风格离散变化。'};
+audio.onerror=()=>{document.querySelector('#status').textContent='示例声音未生成，请在此目录运行 npm run preview。'};
+audio.onended=()=>{play.textContent='播放';paint()};
+function tick(){if(!audio.paused)paint();requestAnimationFrame(tick)}paint();tick();
+</script></html>

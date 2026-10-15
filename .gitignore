@@ -1,0 +1,6 @@
+node_modules/
+.cache/
+output/
+assets/demo.wav
+assets/private/
+*.mp4.json
