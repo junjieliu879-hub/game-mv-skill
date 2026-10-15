@@ -62,12 +62,13 @@ function subtitle(t){
  r(3,158,314,21,'ink');r(4,159,312,1,'gray');r(4,178,312,1,'deep');
  const label=q[2];
  if(/^[\x20-\x7e]*$/.test(label)){
+   if(textW(label)>306)throw Error('Split this caption by the actual sung phrase; do not crop text.');
    bitmapText(k,label,Math.round((320-textW(label))/2),165,P.white);return;
  }
  if(!glyphs.has(label)){
    const cv=document.createElement('canvas');cv.width=310;cv.height=17;
    const g=cv.getContext('2d');g.fillStyle='#000';g.fillRect(0,0,310,17);
-   g.font='13px '+project.captionFont;g.textAlign='center';g.textBaseline='top';g.fillStyle='#fff';g.fillText(label,155,0,306);
+   g.font='13px '+project.captionFont;g.textAlign='center';g.textBaseline='top';g.fillStyle='#fff';if(g.measureText(label).width>306)throw Error('Caption too wide; split it at the actual phrase boundary.');g.fillText(label,155,0);
    const coords=[],data=g.getImageData(0,0,310,17).data;
    for(let y=0;y<17;y++)for(let x=0;x<310;x++)if(data[(y*310+x)*4]>110)coords.push([x,y]);
    glyphs.set(label,coords);
@@ -76,6 +77,13 @@ function subtitle(t){
 }
 const blocking=new URLSearchParams(location.search).has('blocking');
 function render(t,caption=true){t=Math.max(0,Math.min(DUR-1e-7,t));let q=blocking?(keys.filter(x=>x<=t).at(-1)||0):t;const sh=draw(q);if(caption)subtitle(t);main.present();return{time:t,shot:sh[0],blocking}}
+export const art={actor,depth,camera,endCamera,leaves,rain,grain,subtitle,
+ begin(){k.g.setTransform(1,0,0,1,0,0);k.g.clearRect(0,0,320,180)},
+ background(name,t){if(name.startsWith('playground-'))field(name,t);else bg(name)},
+ image(im,x,y,w,h){k.g.imageSmoothingEnabled=false;k.g.drawImage(im,Math.round(x),Math.round(y),Math.round(w),Math.round(h))},
+ rect:r,line,poly,context:()=>k.g,present:()=>main.present()};
+if(project.engine!=='timeline'){
 window.DUR=DUR;window.render=render;window.READY=true;
-window.PRODUCTION={revision:project.revision,duration:DUR,fps:project.fps,logical:[320,180],output:[project.width,project.width*9/16],captions,shots,actor:'yellow/pink blocks; white-blue tracksuit; cap/flower; four short legs',style:'colored native-pixel campus',audio:project.audio,normalSpeedAV:'requires human review'};
+window.PRODUCTION={workflowVersion:'1.1',revision:project.revision,duration:DUR,fps:project.fps,logical:[320,180],output:[project.width,project.width*9/16],captions,shots,keys,status:'example',engine:'campus',actor:'yellow/pink blocks; white-blue tracksuit; cap/flower; four short legs',style:'colored native-pixel campus',audio:project.audio,normalSpeedAV:'requires human review'};
 render(0);
+}

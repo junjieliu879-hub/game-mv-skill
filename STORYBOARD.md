@@ -33,7 +33,7 @@
 - `mv.js`：`actor()`有front/quarter/side/back、walk/reach/wave/sit/look等姿态；`draw()`按镜头组织动作；`depth()`控制远离；`rain()`、`leaves()`与场景事件共用时间。
 - `assets/campus/make-campus.py`：`playground()`阴/晴/黄昏、`gate()`、`classroom()`、`corridor()`、`railing()`。现成背景已随包提供，修改才需Python与Pillow。
 - `keys`：粗排状态时间，所有人物/道具/环境一起冻结。新事件补关键状态后，同步镜头边界和`draw()`中的动作节点。
-- `render(t, captions)`：字幕开关不改变动画源。`project.fps`用于检查，导出命令使用相同`--fps`；改变默认帧率时同步package.json中的示例命令。
+- `render(t, captions)`：字幕开关不改变动画源。预览、默认导出和检查读取当前项目规格，不需要在package.json另改一套帧率；新歌使用director-plan.json与timeline.mjs。
 
 本例17/21为远/中景，每句2—4镜、只给伸手/指尖/雨滴/小黄花/背影近景，来自该校园脚本要求。其他歌曲按自己的脚本决定。图片背景可保留，人物身份和动作参数不是跨歌曲强制模板。
 

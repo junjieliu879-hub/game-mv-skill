@@ -19,7 +19,9 @@ input[type=range]{width:100%;margin:8px 0}a{color:#a6d7f5}#time{font-variant-num
 <p>原生像素、白蓝校服、彩色校园；公开版配原创示例音乐与文字。字幕开关只控制本帧字幕，不切换画面来源。</p>
 <script type="module">
 import {project,shots} from './project.js';
-await import('./mv.js');
+try{await import(project.engine==='timeline'?'./timeline.mjs':'./mv.js')}catch(e){document.querySelector('#status').textContent='制作未就绪：'+e.message;throw e}
+document.querySelector('h1').textContent=project.title;
+const encoded=document.querySelector('a[href="demo.mp4"]');encoded.href=project.video||'demo.mp4';if(project.engine==='timeline')encoded.textContent='查看本项目导出视频（导出后可用）';
 const audio=document.querySelector('audio'),play=document.querySelector('#play'),seek=document.querySelector('#seek'),cap=document.querySelector('#captions');
 audio.src=project.audio;seek.max=project.duration;
 function paint(){const t=Math.min(audio.currentTime,project.duration);window.render(t,cap.checked);seek.value=t;
@@ -29,8 +31,8 @@ play.onclick=()=>{if(audio.paused)start();else{audio.pause();play.textContent='�
 document.querySelector('#restart').onclick=()=>{audio.currentTime=0;start()};
 seek.oninput=()=>{audio.currentTime=Number(seek.value);paint()};cap.onchange=paint;
 document.querySelector('#sound').onchange=e=>{audio.muted=e.target.value==='0'};
-audio.oncanplay=()=>{play.disabled=false;document.querySelector('#status').textContent='已就绪 · 48fps 时间采样，步态按像素风格离散变化。'};
-audio.onerror=()=>{document.querySelector('#status').textContent='示例声音未生成，请在此目录运行 npm run preview。'};
+audio.oncanplay=()=>{play.disabled=false;document.querySelector('#status').textContent='已就绪 · '+project.fps+'fps 时间采样，步态按像素风格离散变化。'};
+audio.onerror=()=>{document.querySelector('#status').textContent='项目音频缺失或无法解码，请检查 project.audio；不使用示例音乐替代。'};
 audio.onended=()=>{play.textContent='播放';paint()};
 function tick(){if(!audio.paused)paint();requestAnimationFrame(tick)}paint();tick();
 </script></html>

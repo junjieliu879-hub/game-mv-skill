@@ -1,0 +1,383 @@
+{
+  "schemaVersion": 1,
+  "status": "rough",
+  "story": "他鼓起勇气，她注意到但仍离开；仅示范可执行的事件/姿态与接镜，不是新歌剧情。",
+  "input": {
+    "audio": {
+      "path": "assets/private/song.wav",
+      "sha256": "REPLACE_WITH_MEASURED_INPUT_HASH",
+      "duration": 8
+    }
+  },
+  "project": {
+    "title": "表演交接示例",
+    "revision": "example",
+    "engine": "timeline",
+    "duration": 8,
+    "width": 1920,
+    "fps": 48,
+    "audio": "assets/private/song.wav",
+    "captionFont": "sans-serif"
+  },
+  "backgrounds": {},
+  "scenes": {
+    "path": {
+      "background": "playground-gray",
+      "weather": {
+        "leaves": true
+      },
+      "actors": [
+        {
+          "id": "he",
+          "identity": "yellow",
+          "keys": [
+            {
+              "t": 0,
+              "x": 122,
+              "y": 145,
+              "scale": 1,
+              "visible": true,
+              "view": "front",
+              "dir": 1,
+              "walk": false,
+              "reach": 0,
+              "wave": 0,
+              "down": 0,
+              "smile": 0,
+              "sad": 0,
+              "sit": 0,
+              "look": 0,
+              "lean": 0,
+              "squint": 0
+            },
+            {
+              "x": 122,
+              "y": 145,
+              "scale": 1,
+              "visible": true,
+              "view": "quarter",
+              "dir": 1,
+              "walk": false,
+              "reach": 0,
+              "wave": 0,
+              "down": 0,
+              "smile": 0,
+              "sad": 0,
+              "sit": 0,
+              "look": 2,
+              "lean": 0,
+              "squint": 0,
+              "at": "notice"
+            },
+            {
+              "x": 122,
+              "y": 145,
+              "scale": 1,
+              "visible": true,
+              "view": "side",
+              "dir": 1,
+              "walk": false,
+              "reach": 0,
+              "wave": 0,
+              "down": 0,
+              "smile": 0,
+              "sad": 0,
+              "sit": 0,
+              "look": 2,
+              "lean": 0,
+              "squint": 0,
+              "ease": {
+                "reach": "outCubic",
+                "lean": "smoothstep"
+              },
+              "at": "reach"
+            },
+            {
+              "t": 2.4,
+              "x": 122,
+              "y": 145,
+              "scale": 1,
+              "visible": true,
+              "view": "side",
+              "dir": 1,
+              "walk": false,
+              "reach": 1,
+              "wave": 0,
+              "down": 0,
+              "smile": 0,
+              "sad": 0,
+              "sit": 0,
+              "look": 2,
+              "lean": 1,
+              "squint": 0
+            },
+            {
+              "t": 4,
+              "x": 122,
+              "y": 145,
+              "scale": 1,
+              "visible": true,
+              "view": "side",
+              "dir": 1,
+              "walk": false,
+              "reach": 1,
+              "wave": 0,
+              "down": 0,
+              "smile": 0,
+              "sad": 1,
+              "sit": 0,
+              "look": 2,
+              "lean": 1,
+              "squint": 0,
+              "ease": {
+                "reach": "linear",
+                "lean": "linear",
+                "down": "smoothstep"
+              }
+            },
+            {
+              "t": 6.3,
+              "x": 122,
+              "y": 145,
+              "scale": 1,
+              "visible": true,
+              "view": "side",
+              "dir": 1,
+              "walk": false,
+              "reach": 0,
+              "wave": 0,
+              "down": 2,
+              "smile": 0,
+              "sad": 1,
+              "sit": 0,
+              "look": 2,
+              "lean": 0,
+              "squint": 0
+            }
+          ]
+        },
+        {
+          "id": "she",
+          "identity": "pink",
+          "keys": [
+            {
+              "t": 0,
+              "x": 185,
+              "y": 145,
+              "scale": 1,
+              "visible": true,
+              "view": "front",
+              "dir": -1,
+              "walk": false,
+              "reach": 0,
+              "wave": 0,
+              "down": 0,
+              "smile": 0,
+              "sad": 0,
+              "sit": 0,
+              "look": 0,
+              "lean": 0,
+              "squint": 0
+            },
+            {
+              "x": 185,
+              "y": 145,
+              "scale": 1,
+              "visible": true,
+              "view": "quarter",
+              "dir": -1,
+              "walk": false,
+              "reach": 0,
+              "wave": 0,
+              "down": 0,
+              "smile": 0,
+              "sad": 0,
+              "sit": 0,
+              "look": -2,
+              "lean": 0,
+              "squint": 0,
+              "at": "response"
+            },
+            {
+              "t": 2.6,
+              "x": 185,
+              "y": 145,
+              "scale": 1,
+              "visible": true,
+              "view": "side",
+              "dir": -1,
+              "walk": false,
+              "reach": 0,
+              "wave": 0,
+              "down": 0,
+              "smile": 0,
+              "sad": 0,
+              "sit": 0,
+              "look": -2,
+              "lean": 0,
+              "squint": 0
+            },
+            {
+              "t": 3.2,
+              "x": 185,
+              "y": 145,
+              "scale": 1,
+              "visible": true,
+              "view": "quarter",
+              "dir": 1,
+              "walk": false,
+              "reach": 0,
+              "wave": 0,
+              "down": 0,
+              "smile": 0,
+              "sad": 0,
+              "sit": 0,
+              "look": 0,
+              "lean": 0,
+              "squint": 0
+            },
+            {
+              "x": 185,
+              "y": 145,
+              "scale": 1,
+              "visible": true,
+              "view": "back",
+              "dir": 1,
+              "walk": true,
+              "reach": 0,
+              "wave": 0,
+              "down": 0,
+              "smile": 0,
+              "sad": 0,
+              "sit": 0,
+              "look": 0,
+              "lean": 0,
+              "squint": 0,
+              "ease": {
+                "x": "linear"
+              },
+              "at": "leave"
+            },
+            {
+              "t": 7.5,
+              "x": 350,
+              "y": 145,
+              "scale": 1,
+              "visible": true,
+              "view": "back",
+              "dir": 1,
+              "walk": false,
+              "reach": 0,
+              "wave": 0,
+              "down": 0,
+              "smile": 0,
+              "sad": 0,
+              "sit": 0,
+              "look": 0,
+              "lean": 0,
+              "squint": 0
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "events": [
+    {
+      "id": "notice",
+      "t": 0.6,
+      "action": "他先看她与手间距离",
+      "result": "身体随后转向"
+    },
+    {
+      "id": "reach",
+      "t": 1.2,
+      "action": "他主动伸手",
+      "result": "尚未接触"
+    },
+    {
+      "id": "response",
+      "t": 1.55,
+      "action": "她注意到他的手",
+      "result": "目光转移"
+    },
+    {
+      "id": "leave",
+      "t": 3.65,
+      "action": "她转身后起步",
+      "result": "他收手，距离增加"
+    }
+  ],
+  "captions": [],
+  "shots": [
+    {
+      "id": "A",
+      "start": 0,
+      "end": 2.4,
+      "size": "中景",
+      "scene": "path",
+      "camera": {
+        "scale": 2,
+        "x": 81,
+        "y": 72
+      },
+      "meaning": "鼓起勇气但还没牵住",
+      "first": "两人并肩，手在身旁",
+      "last": "他转身伸手，她注意到",
+      "handoff": "接同地点同一伸手",
+      "timingEvidence": "仅示范时间；新歌须依实际乐句设计",
+      "checks": [
+        "双方行动有先后，回应有注意对象",
+        "保持完整轮廓、支撑和方向，不淡出代替离开"
+      ]
+    },
+    {
+      "id": "B",
+      "start": 2.4,
+      "end": 4.4,
+      "size": "中景",
+      "scene": "path",
+      "camera": {
+        "scale": 2,
+        "x": 81,
+        "y": 72
+      },
+      "meaning": "她看见了，仍选择离开",
+      "first": "承接伸手姿态",
+      "last": "她转向迈步，他仍伸手",
+      "handoff": "接同一迈步和方向",
+      "timingEvidence": "仅示范时间；新歌须依实际乐句设计",
+      "checks": [
+        "双方行动有先后，回应有注意对象",
+        "保持完整轮廓、支撑和方向，不淡出代替离开"
+      ]
+    },
+    {
+      "id": "C",
+      "start": 4.4,
+      "end": 8,
+      "size": "远景",
+      "scene": "path",
+      "camera": {
+        "scale": 1,
+        "x": 0,
+        "y": 0
+      },
+      "meaning": "他停住并收手",
+      "first": "双方位置朝向接前镜",
+      "last": "她出画，他留在原地",
+      "handoff": "接独处，不重置状态",
+      "timingEvidence": "仅示范时间；新歌须依实际乐句设计",
+      "checks": [
+        "双方行动有先后，回应有注意对象",
+        "保持完整轮廓、支撑和方向，不淡出代替离开"
+      ]
+    }
+  ],
+  "review": {
+    "technical": "pending",
+    "normalSpeedViewing": "pending",
+    "listening": "pending",
+    "userAcceptance": "pending"
+  }
+}

@@ -1,15 +1,21 @@
 {
   "name": "pixel-game-mv",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
   "description": "Native-pixel music-video skill, campus example and local rendering tools",
   "type": "module",
   "license": "MIT",
-  "engines": {"node": ">=22"},
-  "scripts": {
-    "preview": "node make-audio.mjs && node preview.mjs",
-    "render": "node make-audio.mjs && node render.mjs --page film.html --audio assets/demo.wav --out output/mv.mp4 --fps 48",
-    "check": "node make-audio.mjs && node check.mjs"
+  "engines": {
+    "node": ">=22"
   },
-  "dependencies": {"puppeteer-core": "25.11.0"}
+  "scripts": {
+    "preview": "node run.mjs preview",
+    "render": "node run.mjs render",
+    "check": "node run.mjs check",
+    "new": "node create-project.mjs",
+    "test": "node --test test-workflow.mjs"
+  },
+  "dependencies": {
+    "puppeteer-core": "25.11.0"
+  }
 }

@@ -1,0 +1,23 @@
+import fs from 'node:fs';import path from 'node:path';import {fileURLToPath} from 'node:url';import {execFileSync} from 'node:child_process';import {createHash} from 'node:crypto';
+const root=path.dirname(fileURLToPath(import.meta.url)),opts={};
+for(let i=2;i<process.argv.length;i+=2){if(!process.argv[i].startsWith('--')||process.argv[i+1]===undefined)throw Error('Use --dir folder --audio file --lyrics file.');opts[process.argv[i].slice(2)]=process.argv[i+1]}
+for(const k of ['dir','audio','lyrics'])if(!opts[k])throw Error('Missing --'+k);
+const dest=path.resolve(opts.dir),audio=path.resolve(opts.audio),lyrics=path.resolve(opts.lyrics);
+if(dest===root||dest.startsWith(root+path.sep))throw Error('Create the film outside the skill repository so private inputs are not published accidentally.');
+if(fs.existsSync(dest))throw Error('Destination exists; choose a new project directory.');
+for(const p of [audio,lyrics])if(!fs.existsSync(p)||!fs.statSync(p).isFile())throw Error('Missing input: '+p);
+if(!fs.readFileSync(lyrics,'utf8').trim())throw Error('Lyrics file is empty.');
+const info=JSON.parse(execFileSync('ffprobe',['-v','error','-show_streams','-show_format','-of','json',audio],{encoding:'utf8'}));
+const stream=info.streams.find(s=>s.codec_type==='audio'),duration=Number(stream?.duration||info.format.duration);
+if(!stream||!Number.isFinite(duration)||duration<=0)throw Error('Cannot measure the original audio.');
+fs.mkdirSync(path.join(dest,'assets/private'),{recursive:true});
+const files=['mv.js','timeline.mjs','plan.mjs','pixel-primitives.js','film.html','demo.html','preview.mjs','render.mjs','render-storage.mjs','run.mjs','mix-audio.mjs','check.mjs','create-project.mjs','make-audio.mjs','test-workflow.mjs','acting-example.json','WORKFLOW.md','SKILL.md','AGENTS.md','LICENSE','THIRD_PARTY_NOTICES.md','UPSTREAM_LICENSE','.gitignore','.gitattributes','package.json','package-lock.json'];
+for(const name of files)fs.copyFileSync(path.join(root,name),path.join(dest,name));
+fs.cpSync(path.join(root,'assets/campus'),path.join(dest,'assets/campus'),{recursive:true});
+const audioPath='assets/private/song'+path.extname(audio).toLowerCase();fs.copyFileSync(audio,path.join(dest,audioPath));fs.copyFileSync(lyrics,path.join(dest,'assets/private/lyrics.txt'));
+const signature=file=>createHash('sha256').update(fs.readFileSync(file)).digest('hex');
+const plan={schemaVersion:1,status:'design',story:'',input:{audio:{path:audioPath,sha256:signature(audio),duration},lyrics:{path:'assets/private/lyrics.txt',sha256:signature(lyrics)}},project:{title:path.basename(dest),revision:'r1',engine:'timeline',duration,fps:48,width:1920,audio:audioPath,video:'output/mv.mp4',captionFont:'"Microsoft YaHei", "Noto Sans CJK SC", sans-serif'},constraints:[],backgrounds:{},scenes:{},events:[],captions:[],shots:[],review:{technical:'pending',normalSpeedViewing:'pending',listening:'pending',userAcceptance:'pending'}};
+fs.writeFileSync(path.join(dest,'director-plan.json'),JSON.stringify(plan,null,2)+'\n');
+fs.writeFileSync(path.join(dest,'project.js'),`import {keyTimes,resolvePlan} from './plan.mjs';\nexport const plan=await fetch('./director-plan.json').then(r=>{if(!r.ok)throw Error('Missing director-plan.json');return r.json()}).then(resolvePlan);\nexport const project=plan.project;\nexport const captions=plan.captions.map(c=>[c.start,c.end,c.text]);\nexport const shots=plan.shots.map(s=>[s.id,s.start,s.end,s.size||'',s.meaning]);\nexport const keys=keyTimes(plan);\n`);
+fs.writeFileSync(path.join(dest,'README.md'),'# 当前歌曲工程\n\n原声和歌词已原样复制并记录签名。先读SKILL.md与WORKFLOW.md，将歌曲关系、镜头和完整姿态写入唯一的director-plan.json；不要把acting-example.json的剧情套给新歌。\n\n设计完成后在本目录运行npm ci、npm run preview；粗排状态用rough，导出用npm run render，检查用npm run check -- output/mv.mp4。空分镜不会假装生成新歌视频。\n');
+console.log(JSON.stringify({project:dest,audioSeconds:duration,status:'design',next:'Read WORKFLOW.md; design real shots/poses in director-plan.json. No story or acceptance was generated.'}));
